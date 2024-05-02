@@ -1,12 +1,16 @@
 'use strict';
 
-function handle500(err, req, res, next) {
-  const error = err.message ? err.message : err;
-  const errorObj = {
-    status: 500,
-    message: error,
+function handleErrors(error, request, response, next) {
+  let output = {
+    code: 500,
+    route: request.path,
+    method: request.method,
+    body: request.body,
+    query: request.query,
+    params: request.params,
+    error: error.message
   };
-  res.status(500).json(errorObj);
+  response.status(500).json(output);
 }
 
-module.exports = handle500;
+module.exports = handleErrors;

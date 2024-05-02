@@ -1,11 +1,12 @@
 'use strict';
 
-const handle404 = (req, res) => {
-  res.status(404).send({
-    error: 404,
-    route: req.path,
-    message: 'ERROR 404: This page does not exist'
-  });
-};
+function handleNotFound(request, response) {
+  let output = {
+    code: 404,
+    error: 'Resource Not Found',
+    message: `Cannot ${request.method} ${request.url}`
+  };
+  response.status(404).json(output);
+}
 
-module.exports = handle404;
+module.exports = handleNotFound;
