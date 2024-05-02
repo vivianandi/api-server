@@ -9,7 +9,7 @@ router.get('/cats', getCats);
 router.get('/cats/:id', getCat);
 router.post('/cats', createCat);
 router.put('/cats/:id', updateCat);
-router.delete('/cats/:id', deletedCat);
+router.delete('/cats/:id', deleteCat);
 
 async function getCats(req, res) {
   let allCats = await Cats.findAll();

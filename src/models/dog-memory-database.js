@@ -1,5 +1,6 @@
 'use strict';
 
+//just example of the database
 let data = {
   1: { dogName: "Rex", dogBreed: "Labrador", dogMood: "Happy" },
   2: { dogName: "Bella", dogBreed: "Beagle", dogMood: "Excited" },
