@@ -15,9 +15,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "jest --coverage",
-    "test-watch": "jest --coverage --watchall"
+    "test": "NODE_ENV=test jest --coverage",
+    "test-watch": "NODE_ENV=test jest --watchAll --coverage",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "viv",
