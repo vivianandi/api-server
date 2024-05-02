@@ -6,7 +6,7 @@ const app = express();
 
 const notFoundHandler = require('./handlers/404.js');
 const errorHandler = require('./handlers/500.js');
-const validator = require('./middleware/validator.js');
+const validator = require('./middleware/logger.js');
 const dogRoutes = require('./routes/dogs.routes.js');
 const catRoutes = require('./routes/cats.routes.js');
 
