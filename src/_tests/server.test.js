@@ -1,56 +1,72 @@
 'use strict';
 
+require('dotenv').config();
 const supertest = require('supertest');
-const { server } = require('../src/server.js'); // Adjust path as necessary
-const request = supertest(server);
+const { app } = require('../server.js');
 
-describe('API Server', () => {
+const mockRequest = supertest(app);
 
-  it('should respond with a 404 status on an invalid route', async () => {
-    const response = await request.get('/nope');
+const { db } = require('../models/index.js');
+
+beforeAll(async () => {
+  await db.sync();
+});
+
+afterAll(async () => {
+  await db.drop();
+});
+
+describe('API Server - Dogs', () => {
+
+  it('should respond with a 404 on an invalid route', async () => {
+    const response = await mockRequest.get('/no-thing');
     expect(response.status).toBe(404);
   });
 
-  it('should respond with a 404 status on an invalid method', async () => {
-    const response = await request.post('/'); // Assuming POST is not allowed on the base route
-    expect(response.status).toBe(404);
+  it('should respond with a 500 when errors are thrown', async () => {
+    const response = await mockRequest.get('/broken');
+    expect(response.status).toBe(500);
   });
 
-  it('Can create a record using POST', async () => {
-    const response = await request.post('/dogs').send({
-      dogName: 'Baxter',
-      dogBreed: 'Beagle',
-      dogMood: 'Happy'
-    });
+  it('can add a dog record', async () => {
+    const data = { dogName: "Buddy", dogBreed: "Golden Retriever", dogMood: "Joyful" };
+    const response = await mockRequest.post('/dogs').send(data);
     expect(response.status).toBe(201);
-    expect(response.body.dogName).toEqual('Baxter');
+    expect(response.body.id).toBeDefined();
+    expect(response.body.dogName).toBe('Buddy');
+    expect(response.body.dogBreed).toBe('Golden Retriever');
   });
 
-  it('Can read a list of records using GET', async () => {
-    const response = await request.get('/dogs');
+  it('can get a list of dog records', async () => {
+    const response = await mockRequest.get('/dogs');
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Array);
+    expect(response.body.length).toBeGreaterThan(0);
+    expect(response.body[0]).toHaveProperty('dogName');
   });
 
-  it('Can read a record using GET', async () => {
-    const response = await request.get('/dogs/1'); // Assuming ID 1 exists
+  it('can get a dog record', async () => {
+    const response = await mockRequest.get('/dogs/1');
     expect(response.status).toBe(200);
+    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty('dogName');
     expect(response.body.dogName).toBeDefined();
   });
 
-  it('Can update a record using PUT', async () => {
-    const response = await request.put('/dogs/1').send({ // Assuming ID 1 exists
-      dogName: 'Max',
-      dogMood: 'Sleepy'
-    });
+  it('can update a dog record', async () => {
+    const data = { dogMood: "Relaxed" };
+    const response = await mockRequest.put('/dogs/1').send(data);
     expect(response.status).toBe(200);
-    expect(response.body.dogMood).toEqual('Sleepy');
+    expect(response.body.dogMood).toBe('Relaxed');
   });
 
-  it('Can delete a record using DELETE', async () => {
-    const response = await request.delete('/dogs/1'); // Assuming ID 1 exists and can be deleted
-    expect(response.status).toBe(204);
+  it('can delete a dog record', async () => {
+    const postResponse = await mockRequest.post('/dogs').send({ dogName: "Coco", dogBreed: "Poodle", dogMood: "Playful" });
+    const id = postResponse.body.id;
+
+    const deleteResponse = await mockRequest.delete(`/dogs/${id}`);
+    expect(deleteResponse.status).toBe(204);
+    expect(deleteResponse.text).toBe('');
   });
 
-  // Add more tests as necessary for other routes and scenarios
 });
