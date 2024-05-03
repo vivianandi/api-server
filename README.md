@@ -54,7 +54,9 @@ To run the tests, execute: `npm test`
 - 204 for Deleting a Dog Record: Ensures that deleting a dog record via DELETE to /dogs/{id} returns a 204 status, confirming the record is removed without returning any content
 
 ## UML
+![UML Diagram](./img/uml2.png)
 ![UML Diagram](./img/uml3.png)
+
 
 ## Deployment
 External Database on Render - postgres://postgresql_server_gokm_user:zgIKbTc2iCnS0FZ5fvc1IrUH7gAHlPb4@dpg-coq45cv79t8c7389iu00-a.oregon-postgres.render.com/postgresql_server_gokm

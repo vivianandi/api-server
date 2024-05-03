@@ -18,6 +18,7 @@ let sequelize = new Sequelize(DATABASE_URL, sequelizeOptions);
 // Require model files
 const catModel = require('./cats.model.js');
 const dogModel = require('./dogs.model.js');
+const Collection = require('./collection.model.js');
 
 module.exports = {
   db: sequelize,
