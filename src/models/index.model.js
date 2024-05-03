@@ -15,13 +15,24 @@ if (process.env.NODE_ENV === 'test') {
 // Initialize sequelize with the database URL and options
 let sequelize = new Sequelize(DATABASE_URL, sequelizeOptions);
 
-// Require model files
-const catModel = require('./cats.model.js');
-const dogModel = require('./dogs.model.js');
-const Collection = require('./collection.model.js');
+const Collection = require('./collection.js');
+const dogSchema = require('./dogs.model.js');
+const dogModel = dogSchema(sequelize, DataTypes);
 
+const catSchema = require('./cats.model.js');
+const catModel = catSchema(sequelize, DataTypes);
+
+const customerSchema = require('./customer.model.js');
+const customerModel = customerSchema(sequelize, DataTypes);
+
+const dogCollection = new Collection(dogModel);
+const catCollection = new Collection(catModel);
+const customerCollection = new Collection(customerModel);
+
+//ALSO CHANGE
 module.exports = {
   db: sequelize,
-  Cats: catModel(sequelize, DataTypes),
-  Dogs: dogModel(sequelize, DataTypes),
+  Dogs: dogCollection,
+  Cats: catCollection,
+  Customers: customerCollection
 };

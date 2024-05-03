@@ -9,6 +9,7 @@ const errorHandler = require('./handlers/500.js');
 const validator = require('./middleware/logger.js');
 const dogRoutes = require('./routes/dogs.routes.js');
 const catRoutes = require('./routes/cats.routes.js');
+const customerRoutes = require('./routes/customer.routes.js');
 
 // Middleware to enable CORS and JSON body parsing
 app.use(cors());
@@ -23,6 +24,7 @@ app.get('/', (req, res) => res.send('Welcome to my home page'));
 // Routes for dog and cat entities
 app.use(dogRoutes);
 app.use(catRoutes);
+app.use('/customers', customerRoutes);
 
 // Endpoint to intentionally trigger an error for testing purposes
 app.get('/broken', (req, res, next) => next('whoops!'));

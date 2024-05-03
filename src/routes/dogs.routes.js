@@ -5,20 +5,20 @@ const { Dogs } = require('../models/index.model.js');
 
 const router = express.Router();
 
-router.get('/dogs', getDogs);
-router.get('/dogs/:id', getDog);
-router.post('/dogs', createDog);
-router.put('/dogs/:id', updateDog);
-router.delete('/dogs/:id', deleteDog);
+router.get('/', getDogs);
+router.get('/:id', getDog);
+router.post('/', createDog);
+router.put('/:id', updateDog);
+router.delete('/:id', deleteDog);
 
 async function getDogs(req, res) {
-  let allDogs = await Dogs.findAll();
+  let allDogs = await Dogs.read();
   res.status(200).json(allDogs);
 }
 
 async function getDog(req, res) {
   const id = parseInt(req.params.id);
-  let dogRecord = await Dogs.findOne({ where: { id: id } });
+  let dogRecord = await Dogs.read(id);
   res.status(200).json(dogRecord);
 }
 
@@ -28,6 +28,7 @@ async function createDog(req, res) {
   res.status(201).json(storedDog);
 }
 
+/* CHANGE THIS ONE
 async function updateDog(req, res) {
   const id = parseInt(req.params.id);
   const updatedDogObj = req.body;
@@ -35,10 +36,19 @@ async function updateDog(req, res) {
   let updatedDog = await fetchedDog.update(updatedDogObj);
   res.status(200).json(updatedDog);
 }
+*/
+
+//change to this one 
+async function updateDog(req, res) {
+  let id = request.params.id;
+  let data = request.body;
+  let updatedRecord = await Model.update(id, data);
+  response.status(200).json(updatedRecord);
+}
 
 async function deleteDog(req, res) {
   const id = parseInt(req.params.id);
-  let deleteDog = await Dogs.destroy({ where: { id: id } });
+  let deleteDog = await Dogs.delete(id);
   res.status(204).json(deleteDog);
 }
 
