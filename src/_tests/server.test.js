@@ -6,7 +6,7 @@ const { app } = require('../server.js');
 
 const mockRequest = supertest(app);
 
-const { db } = require('../models/index.js');
+const { db } = require('../models/index.model.js');
 
 beforeAll(async () => {
   await db.sync();
