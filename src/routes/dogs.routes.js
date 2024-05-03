@@ -25,7 +25,7 @@ async function getDog(req, res) {
 async function createDog(req, res) {
   let newDog = req.body;
   let storedDog = await Dogs.create(newDog);
-  res.status(200).json(storedDog);
+  res.status(201).json(storedDog);
 }
 
 async function updateDog(req, res) {
@@ -39,7 +39,7 @@ async function updateDog(req, res) {
 async function deleteDog(req, res) {
   const id = parseInt(req.params.id);
   let deleteDog = await Dogs.destroy({ where: { id: id } });
-  res.status(200).json(deleteDog);
+  res.status(204).json(deleteDog);
 }
 
 module.exports = router;
