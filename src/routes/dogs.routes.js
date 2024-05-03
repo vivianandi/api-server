@@ -42,8 +42,8 @@ async function updateDog(req, res) {
 async function updateDog(req, res) {
   let id = req.params.id;
   let data = req.body;
-  let updatedRecord = await Model.update(id, data);
-  response.status(200).json(updatedRecord);
+  let updatedRecord = await Dogs.update(id, data);
+  res.status(200).json(updatedRecord);
 }
 
 async function deleteDog(req, res) {
