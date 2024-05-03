@@ -1,5 +1,3 @@
-'use strict';
-
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -22,15 +20,17 @@ app.use(validator);
 app.get('/', (req, res) => res.send('Welcome to my home page'));
 
 // Routes for dog and cat entities
-app.use(dogRoutes);
-app.use(catRoutes);
+app.use('/dogs', dogRoutes); // Ensure the path is specified if not defined within the route file
+app.use('/cats', catRoutes); // Same as above
 app.use('/customers', customerRoutes);
 
 // Endpoint to intentionally trigger an error for testing purposes
 app.get('/broken', (req, res, next) => next('whoops!'));
 
-// Error handling for undefined routes and server errors
-app.use('*', notFoundHandler);
+// 404 Handler should come after all route definitions
+app.use(notFoundHandler); // This handles any undefined routes
+
+// General error handler should be the last piece of middleware
 app.use(errorHandler);
 
 // Function to start the server on a given port

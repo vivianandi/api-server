@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'test') {
 // Initialize sequelize with the database URL and options
 let sequelize = new Sequelize(DATABASE_URL, sequelizeOptions);
 
-const Collection = require('./collection.js');
+const Collection = require('./collection.model.js');
 const dogSchema = require('./dogs.model.js');
 const dogModel = dogSchema(sequelize, DataTypes);
 

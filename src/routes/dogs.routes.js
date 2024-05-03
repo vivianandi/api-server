@@ -40,8 +40,8 @@ async function updateDog(req, res) {
 
 //change to this one 
 async function updateDog(req, res) {
-  let id = request.params.id;
-  let data = request.body;
+  let id = req.params.id;
+  let data = req.body;
   let updatedRecord = await Model.update(id, data);
   response.status(200).json(updatedRecord);
 }
