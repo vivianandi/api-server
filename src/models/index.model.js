@@ -29,6 +29,12 @@ const dogCollection = new Collection(dogModel);
 const catCollection = new Collection(catModel);
 const customerCollection = new Collection(customerModel);
 
+// foreign key is the column name in the child table that references the sourceKey in the parent table
+customerModel.hasMany(dogModel, { foreignKey: 'customerId', sourceKey: 'id' });
+customerModel.hasMany(catModel, { foreignKey: 'customerId', sourceKey: 'id' });
+dogModel.belongsTo(customerModel, { foreignKey: 'customerId', targetKey: 'id' });
+catModel.belongsTo(customerModel, { foreignKey: 'customerId', targetKey: 'id' });
+
 //ALSO CHANGE
 module.exports = {
   db: sequelize,
