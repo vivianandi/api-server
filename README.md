@@ -1,5 +1,4 @@
 # API Server
-
 This project is an Express server designed to manage and handle routes for dogs and cats entities, demonstrating basic routing, middleware usage, and error handling in a Node.js application. The server allows manipulation and retrieval of dog and cat records through RESTful endpoints.
 
 ## Getting Started
@@ -58,3 +57,7 @@ To run the tests, execute: `npm test`
 ![UML Diagram](./img/uml3.png)
 
 ## Deployment
+External Database on Render - postgres://postgresql_server_gokm_user:zgIKbTc2iCnS0FZ5fvc1IrUH7gAHlPb4@dpg-coq45cv79t8c7389iu00-a.oregon-postgres.render.com/postgresql_server_gokm
+
+## Code Review
+Started lab 4 and saw slack message too late, did not do a code review
